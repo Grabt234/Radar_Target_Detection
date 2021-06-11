@@ -10,6 +10,10 @@ D = D_lower:D_step:D_upper
 % 
 % %converting to number of detected pulses 
 % N = 10;
+Nt = 100;
+% 
+% %number of sucessfully detected pulses
+Na = 45;
 % 
 % PFA = 10e-4;
 % 
@@ -57,35 +61,27 @@ D = D_lower:D_step:D_upper
 % 
 
 
-Nt = 100
 Na = 90
-syms pfal ii na
-
-
-Na_all = Nt*D;
 
 %defining symbolic varibales for the analytic solver
 syms pfal na
 
 %The number of ways one can choose ii from Nt pulses
-f = nchoosek(Nt,na);
+f = nchoosek(Nt,ii);
 
 %summand of the binomial distribution
 summand = f*(pfal)^(na)*(1-pfal)^(Nt-na);
 
 %should run for every detection case
 
-for n = 1:numel(Na_all)
-    
-    Na = Na_all(n);
-    
-    %summing from Na -> Nt, with na being variable that changes
-    eqn = (symsum( summand ,na ,Na,Nt) == 10^(-6) ) ;
-    
-    %analytically solving for particular case 
-    vpasolve(eqn,pfal, [0,1])
+for i
+%summing from Na -> Nt, with na being variable that changes
+eqn = (symsum( summand ,na ,Na,Nt) == 10^(-6) ) 
 
-end
+%solving for particular case 
+vpasolve(eqn,pfal, [0,1])
+
+
 
 
 
