@@ -77,37 +77,29 @@ end
 plot_samples = 100;
 
 %defining detection probability for a *single* pulse (100 samples)
-d = linspace(0.1,0.999);
+d = linspace(0.6,0.999);
+d = repmat(d,size(pfa_pulse,2),1)
+
 
 %increasing dimension for snr calculation
-f = pfa_pulse(1)*ones(1, plot_samples);
+f = pfa_pulse.'.*ones(size(pfa_pulse,2), plot_samples);
 
 %calculating snr
-snr = snr_min(d,f)
+snr = snr_min(d,f);
+
+%putting all curves on plot
+for i = 1:15
+    plot(snr(i,:),d(i,:));
+    hold on
+end
+
+xlabel("SNR requirement for swerling 1");
+ylabel("Probability of detection of a single pulse")
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-pfa_pulse
 
 

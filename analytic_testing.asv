@@ -69,7 +69,46 @@ for n = 1:numel(Na_all)
 
 end
 
-%% FINDING MINIMUM SNR FOR NON 
+%% FINDING MINIMUM SNR FOR NON FLUCTUATING TARGET
+
+%NOTE: each array position in D corresponds to array position in pfa_pulse
+
+%how many samples to create the plot with
+plot_samples = 100;
+
+%defining detection probability for a *single* pulse (100 samples)
+d = linspace(0.6,0.999);
+
+%increasing dimension for snr calculation
+f = pfa_pulse(1)*ones(1, plot_samples);
+
+%calculating snr
+snr = snr_min(d,f);
+
+semilogy(snr,d)
+xlabel("SNR");
+ylabel("Probability of detection of a single pulse")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 pfa_pulse
 
