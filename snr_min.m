@@ -1,4 +1,4 @@
-function snr = snr_min(D,F)
+function snr = snr_min(F,D)
     % ---------------------------------------------------------------------    
     % snr_min: calculates the minimum required snr to detect a single pulse
     %              given the probability of detection and false alarm rate

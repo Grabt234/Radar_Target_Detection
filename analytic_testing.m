@@ -50,7 +50,7 @@ syms pfal na
 f = nchoosek(Nt,na);
 
 %summand of the binomial distribution
-summand = f*(pfal)^(na)*(1-pfal)^(Nt-na);
+summand = f*((pfal)^(na)*(1-pfal)^(Nt-na)); 
 
 %preallocating memory for storing individual pulse pfa's
 pfa_pulse = zeros(1,samples);
@@ -58,11 +58,11 @@ pfa_pulse = zeros(1,samples);
 %should run for every detection case
 for n = 1:numel(Na_all)
     
-    %number of alarmed pulses
+    %number of alarmed pulses (increases every loop)
     Na = Na_all(n);
     
     %summing from Na -> Nt, with na being variable that changes
-    eqn = (symsum( summand ,na ,Na,Nt) == 10^(-6) ) ;
+    eqn = (symsum( summand ,na ,Na,Nt) == PFA ) ;
     
     %probability of false alarm for an individual pulse 
     pfa_pulse(1,n) = vpasolve(eqn,pfal, [0,1]);
@@ -77,23 +77,23 @@ end
 plot_samples = 100;
 
 %defining detection probability for a *single* pulse (100 samples)
-d = linspace(0.6,0.999);
-d = repmat(d,size(pfa_pulse,2),1)
+d = linspace(0.1,0.999);
+
 
 
 %increasing dimension for snr calculation
-f = pfa_pulse.'.*ones(size(pfa_pulse,2), plot_samples);
+f = pfa_pulse(10)*ones(1, plot_samples);
 
 %calculating snr
-snr = snr_min(d,f);
+snr = snr_min(f,d)
 
 %putting all curves on plot
-for i = 1:15
-    plot(snr(i,:),d(i,:));
+for i = 1:1
+    plot(snr,d);
     hold on
 end
 
-xlabel("SNR requirement for swerling 1");
+xlabel("SNR requirement for swerling 0");
 ylabel("Probability of detection of a single pulse")
 
 
