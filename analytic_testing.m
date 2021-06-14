@@ -32,7 +32,7 @@ D = D_lower:D_step:D_upper;
 Nt = 100;
 
 %probability of false alarm over one dwell (across all pulses)
-PFA = 10e-4;
+PFA = 1e-8;
 
 %symbolic variables for binomial solver
 syms pfal ii na
@@ -82,10 +82,17 @@ d = linspace(0.1,0.999);
 
 
 %increasing dimension for snr calculation
-f = pfa_pulse(10)*ones(1, plot_samples);
+f = pfa_pulse(14)*ones(1, plot_samples);
 
 %calculating snr
-snr = snr_min(f,d)
+snr = zeros(1,plot_samples)
+
+for i = 1:plot_samples
+    
+    snr(i) = snr_min(f(i),d(i))
+    
+end
+
 
 %putting all curves on plot
 for i = 1:1

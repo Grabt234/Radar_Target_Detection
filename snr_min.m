@@ -13,7 +13,16 @@ function snr = snr_min(F,D)
     %   > snr:  The minimum snr given D and F
     %
     % ---------------------------------------------------------------------
-
-    snr = 0.5*(norminv(F) - norminv(D)).^2;
+    
+    %condition allows for snr that ^2 removes
+    if (F <= D)
+        
+        snr = 0.5*(norminv(F) - norminv(D))^2;
+        
+    else
+        
+        snr = -0.5*(norminv(F) - norminv(D))^2;
+    
+    end
     
 end
