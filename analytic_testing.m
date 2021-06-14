@@ -18,7 +18,7 @@
 % 
 % 
 
-%% DEFENITIONS
+%% DETERMINE NUMBER OF SUCESSFULLY RECEIVED PULSES
 
 %array of detection probabilities
 D_lower = 0.8; 
@@ -44,7 +44,7 @@ Na_all = Nt*D;
 syms pfal na
 
 
-%% SOLVING BINOMIAL
+%% SOLVING BINOMIAL FOR INDIVIDUAL PULSE pfa
 
 %The number of ways one can choose ii from Nt pulses
 f = nchoosek(Nt,na);
@@ -64,10 +64,49 @@ for n = 1:numel(Na_all)
     %summing from Na -> Nt, with na being variable that changes
     eqn = (symsum( summand ,na ,Na,Nt) == 10^(-6) ) ;
     
-    %analytically solving for particular case 
+    %probability of false alarm for an individual pulse 
     pfa_pulse(1,n) = vpasolve(eqn,pfal, [0,1]);
 
 end
+
+%% FINDING MINIMUM SNR FOR NON FLUCTUATING TARGET
+
+%NOTE: each array position in D corresponds to array position in pfa_pulse
+
+%how many samples to create the plot with
+plot_samples = 100;
+
+%defining detection probability for a *single* pulse (100 samples)
+d = linspace(0.1,0.999);
+
+%increasing dimension for snr calculation
+f = pfa_pulse(1)*ones(1, plot_samples);
+
+%calculating snr
+snr = snr_min(d,f)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 pfa_pulse
 

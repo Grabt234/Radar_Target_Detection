@@ -18,7 +18,7 @@
 % 
 % 
 
-%% DEFENITIONS
+%% DETERMINE NUMBER OF SUCESSFULLY RECEIVED PULSES
 
 %array of detection probabilities
 D_lower = 0.8; 
@@ -44,7 +44,7 @@ Na_all = Nt*D;
 syms pfal na
 
 
-%% SOLVING BINOMIAL
+%% SOLVING BINOMIAL FOR INDIVIDUAL PULSE pfa
 
 %The number of ways one can choose ii from Nt pulses
 f = nchoosek(Nt,na);
@@ -52,7 +52,8 @@ f = nchoosek(Nt,na);
 %summand of the binomial distribution
 summand = f*(pfal)^(na)*(1-pfal)^(Nt-na);
 
-%preallocating memory for 
+%preallocating memory for storing individual pulse pfa's
+pfa_pulse = zeros(1,samples);
 
 %should run for every detection case
 for n = 1:numel(Na_all)
@@ -63,11 +64,13 @@ for n = 1:numel(Na_all)
     %summing from Na -> Nt, with na being variable that changes
     eqn = (symsum( summand ,na ,Na,Nt) == 10^(-6) ) ;
     
-    %analytically solving for particular case 
-    vpasolve(eqn,pfal, [0,1])
+    %probability of false alarm for an individual pulse 
+    pfa_pulse(1,n) = vpasolve(eqn,pfal, [0,1]);
 
 end
 
+%% FINDING MINIMUM SNR FOR NON 
 
+pfa_pulse
 
 
