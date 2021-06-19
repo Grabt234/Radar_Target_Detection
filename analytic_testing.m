@@ -79,26 +79,34 @@ plot_samples = 100;
 %defining detection probability for a *single* pulse (100 samples)
 d = linspace(0.1,0.999);
 
+%reducing number of curves to plot
+rescale_factor = 5;
 
+%pre-allocating memeory for legend
+plot_legend = cell(samples/rescale_factor,1);
 
-%increasing dimension for snr calculation
-f = pfa_pulse(14)*ones(1, plot_samples);
-
-%calculating snr
-snr = zeros(1,plot_samples)
-
-for i = 1:plot_samples
+for j = 1:rescale_factor:samples
     
-    snr(i) = snr_min(f(i),d(i))
-    
-end
+    %increasing dimension for snr calculation
+    f = pfa_pulse(j)*ones(1, plot_samples);
+
+    %calculating snr
+    snr = zeros(1,plot_samples)
+
+    for i = 1:plot_samples
+
+        snr(i) = snr_min(f(i),d(i))
+
+    end
 
 
-%putting all curves on plot
-for i = 1:1
     plot(snr,d);
+    plot_legend{ceil(j/rescale_factor),1} = string(pfa_pulse(j))
     hold on
+    
 end
+
+legend(plot_legend)
 
 xlabel("SNR requirement for swerling 0");
 ylabel("Probability of detection of a single pulse")
