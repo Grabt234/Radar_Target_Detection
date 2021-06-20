@@ -44,7 +44,7 @@ Na_all = Nt*D;
 syms pfal na
 
 
-%% SOLVING BINOMIAL FOR INDIVIDUAL PULSE pfa SWERLING 0
+%% SOLVING BINOMIAL FOR INDIVIDUAL PULSE pfa (SWERLING 0)
 
 %The number of ways one can choose ii from Nt pulses
 f = nchoosek(Nt,na);
@@ -111,6 +111,56 @@ legend(plot_legend)
 xlabel("SNR requirement for swerling 0");
 ylabel("Probability of detection of a single pulse")
 hold off
+
+%% ADJUSTING FOR SWERLING
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

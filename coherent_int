@@ -44,7 +44,7 @@ Na_all = Nt*D;
 syms pfal na
 
 
-%% SOLVING BINOMIAL FOR INDIVIDUAL PULSE pfa
+%% SOLVING BINOMIAL FOR INDIVIDUAL PULSE pfa (SWERLING 0)
 
 %The number of ways one can choose ii from Nt pulses
 f = nchoosek(Nt,na);
@@ -69,7 +69,7 @@ for n = 1:numel(Na_all)
 
 end
 
-%% FINDING MINIMUM SNR FOR NON FLUCTUATING TARGET
+%% FINDING MINIMUM SNR FOR NON FLUCTUATING TARGET (SWERLING 0)
 
 %NOTE: each array position in D corresponds to array position in pfa_pulse
 
@@ -85,6 +85,7 @@ rescale_factor = 5;
 %pre-allocating memeory for legend
 plot_legend = cell(samples/rescale_factor,1);
 
+%plotting multiple curves on single plot
 for j = 1:rescale_factor:samples
     
     %increasing dimension for snr calculation
@@ -107,9 +108,58 @@ for j = 1:rescale_factor:samples
 end
 
 legend(plot_legend)
-
 xlabel("SNR requirement for swerling 0");
 ylabel("Probability of detection of a single pulse")
+hold off
+
+%% ADJUSTING FOR SWERLING
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
