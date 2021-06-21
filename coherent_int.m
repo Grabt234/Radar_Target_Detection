@@ -3,7 +3,7 @@
 %array of detection probabilities
 D_lower = 0.8; 
 D_upper = 0.95;
-samples = 15;
+samples = 5500;
 D_step = (D_upper - D_lower)/samples;
 %array of detection probabilities over 1 scan
 D = D_lower:D_step:D_upper;
@@ -47,10 +47,10 @@ for i = 1:samples+1
       
 end
 
-
-
+%% PLOTTING
 plot(snr,d)
-
+xlabel("snr")
+ylabel("pd")
 
 
 
