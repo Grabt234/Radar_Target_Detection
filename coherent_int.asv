@@ -35,7 +35,7 @@ d = d*Lm*Lmf;
 
 %false alarm probability of scan divided by pulses in scan
 pfa = PFA/Nt;
-pfa = repmat(pfa, 1, samples+1)
+pfa = repmat(pfa, 1, samples)
 
 %% SOLVING FOR SNR USING PULSE DETECTIBILITY FACTOR
 
