@@ -1,23 +1,3 @@
-% % %% taking pfa and solving for snr of single pulse
-% % 
-% % pfa_calc = 0.070899420856138395109951223210513;
-% % pfa_calc = 0.0001;
-% % 
-% % %creating detectibility factors
-% % size = 10;
-% % d = 0.01:0.001:0.999;
-% % f= repmat(pfa_calc,1,length(d));
-% % 
-% % snr_pulse = snr_min(d,f)
-% % 
-% % %% PLOTTING RESULTS
-% % 
-% % plot(snr_pulse,d)
-% % ylabel("Probability of Detection")
-% % xlabel("Signal-to-Noise") %linear or dB?
-% 
-% 
-
 %% DETERMINE NUMBER OF SUCESSFULLY RECEIVED PULSES
 
 %array of detection probabilities
