@@ -24,19 +24,17 @@
 pfa = 10e-4;
 
 %% Voltage Distribution 
-
 x = -5:.01:5;
 sigma = (2^(-.5));
-pd = makedist('Normal','Sigma',sigma);
+
+pd_H1 = makedist('Normal','Sigma',sigma)
+pdf_normal_H1 = pdf(pd_H1,x);
 
 figure
-plot(x, pdf(pd,x))
-xlabel("Voltage")
-ylabel("Probability")
-title("Plot showing voltage PDF")
+plot(x, pdf_normal_H1)
 
 
 %% CUMULATIVE VOLTAGE DISTRIBUTION
-
 figure
+
 plot(x,erf(x))

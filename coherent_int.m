@@ -9,7 +9,7 @@ D_step = (D_upper - D_lower)/samples;
 D = linspace(D_lower,D_upper,samples);
 
 %number of transmitted pulses
-Nt = 100;
+Nt = 1;
 
 %probability of false alarm over one dwell (across all pulses)
 PFA = 1e-4;
