@@ -42,8 +42,9 @@ pfa = repmat(pfa, 1, samples)
 snr = zeros(1, samples);
 
 for i = 1:samples
-      
-      snr(i)  = snr_min(pfa(i), d(i));  
+    
+      snr(i) = (erfcinv(d)/erfcinv(pfa));
+      %snr(i)  = snr_min(pfa(i), d(i));  
       
 end
 
