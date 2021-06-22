@@ -20,6 +20,7 @@
 % xline(loc_pd)
 % 
 % 
+close all
 
 pfa = 10e-4;
 
@@ -31,12 +32,37 @@ pd = makedist('Normal','Sigma',sigma);
 
 figure
 plot(x, pdf(pd,x))
+
 xlabel("Voltage")
 ylabel("Probability")
-title("Plot showing voltage PDF")
+title("Plot showing voltage PDF with threshold voltage plotted")
+
+%% Threshold Voltage
+
+%inverse of the cumulative normal distribution
+x_loc = 1 - norminv(pfa, sigma);
+hold on
+xline(x_loc)
 
 
 %% CUMULATIVE VOLTAGE DISTRIBUTION
 
 figure
+
 plot(x,erf(x))
+hold on
+xline(erfinv())
+
+xlabel("voltage")
+ylabel("cumulative probability")
+title("CDF of voltage")
+
+
+
+
+
+
+
+
+
+

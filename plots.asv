@@ -24,17 +24,38 @@
 pfa = 10e-4;
 
 %% Voltage Distribution 
+
 x = -5:.01:5;
 sigma = (2^(-.5));
-
-pd_H1 = makedist('Normal','Sigma',sigma)
-pdf_normal_H1 = pdf(pd_H1,x);
+pd = makedist('Normal','Sigma',sigma);
 
 figure
-plot(x, pdf_normal_H1)
+plot(x, pdf(pd,x))
+xlabel("Voltage")
+ylabel("Probability")
+title("Plot showing voltage PDF with threshold voltage plotted")
+
+%% Threshold Voltage
+
+%inverse of the cumulative normal distribution
+x_loc = 1 - norminv(pfa, sigma);
+hold on
+xline(x_loc)
 
 
 %% CUMULATIVE VOLTAGE DISTRIBUTION
+
 figure
 
 plot(x,erf(x))
+
+
+
+
+
+
+
+
+
+
+
