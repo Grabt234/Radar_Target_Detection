@@ -20,34 +20,84 @@
 % xline(loc_pd)
 % 
 % 
+close all
 
-pfa = 10e-4;
+pfa = 10e-3;
 
-%% Voltage Distribution 
+%% NOISE VOLTAGE DISTRIBUTION
 
 x = -5:.01:5;
-sigma = (2^(-.5));
+sigma = 1;
 pd = makedist('Normal','Sigma',sigma);
 
 figure
 plot(x, pdf(pd,x))
+
 xlabel("Voltage")
 ylabel("Probability")
 title("Plot showing voltage PDF with threshold voltage plotted")
 
-%% Threshold Voltage
+%% THRESHOLD VOLTAGE
 
-%inverse of the cumulative normal distribution
-x_loc = 1 - norminv(pfa, sigma);
+%inverse of the cumulative normal distribution give threshold voltage
+x_th_pfa = 1 - norminv(pfa, sigma);
 hold on
-xline(x_loc)
+xline(x_th_pfa)
 
 
-%% CUMULATIVE VOLTAGE DISTRIBUTION
+%% CUMULATIVE VOLTAGE DISTRIBUTION OF NOISE
 
 figure
 
-plot(x,erf(x))
+norm_area_right_pfa = 1 - cdf('Normal',x_th_pfa,0,sigma);
+
+plot(x,cdf('Normal',x,0,sigma))
+hold on
+xline(norminv(norm_area_right_pfa,0,sigma))
+
+xlabel("voltage")
+ylabel("cumulative probability")
+title("CDF of noise voltage")
+
+%% SIGNAL DISTRIBUTION
+
+pd = 0.8;
+
+sigma_pd = 1;
+x_th_pd = norminv(pd,0,sigma_pd)
+
+figure
+plot(x,cdf('Normal',x,0,sigma_pd));
+xline(1-x_th_pd)
+
+
+pd_pd = makedist('Normal','Sigma',sigma, 'mu', 0);
+
+figure
+plot(x,pdf(pd_pd,x))
+hold on
+xline(1-x_th_pd)
+
+%% HOPEFUL CALCULATIONS
+
+x_th_pfa
+x_th_pd
+t = -(x_th_pd-x_th_pfa)/x_th_pfa
+20*log((t))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
