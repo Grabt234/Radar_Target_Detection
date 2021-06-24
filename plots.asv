@@ -45,19 +45,17 @@ title("CDF of noise voltage")
 %lower bound to include 80% of H1 above threshold
 norm_area_right_pd = 1- Pd;
 
-%converting area of norm to threshold value
+%converting area of norm t
 d_thresh = norminv(norm_area_right_pd,0,sigma);
 
-%plotting cdf of H1
 figure
 plot(x,cdf('Normal',x,0,sigma));
 xline(d_thresh)
 title("plot showing CDF H1 with pd")
 
-%plotting pdf of H1
+
 pd_pd = makedist('Normal','Sigma',sigma, 'mu', 0);
 
-%ploting pdf of H1 with threshold
 figure
 plot(x,pdf(pd_pd,x))
 title("plot showing PDF H1 with pd")
@@ -70,7 +68,7 @@ H1 = pdf(pd_pd,x);
 figure
 plot(x, H0)
 hold on
-plot(x-d_thresh+Vt, H1)
+plot(x+d_thresh, H1)
 hold on
 xline(Vt)
 

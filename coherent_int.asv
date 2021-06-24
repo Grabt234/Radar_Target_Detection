@@ -69,7 +69,7 @@ ylabel("pd")
 title("Required SNR for 100 coherently integrated pulses")
 grid on
 
-%% WITH SWERLING
+%% 
 
 
 
