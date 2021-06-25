@@ -1,14 +1,16 @@
 close all
 
-Pfa = 1e-4;
-Pd = 0.01:0.0001:0.9995;
+Pfa = 1e-6;
+Pd = 0.1:0.01:0.95
+
+Nt = 1
 
 %% NOISE VOLTAGE DISTRIBUTION
 
 x = -7:.01:7;
 %standard deviation of noise
-std_dev = (1/(1*sqrt(2)))^-0.5;
-var = (std_dev)^2
+std_dev = (1)^-0.5;
+var = ((std_dev)^2)/2
 pd = makedist('Normal','Sigma',std_dev);
 H0 =  pdf(pd,x);
 
@@ -54,7 +56,7 @@ plot(snr_db,Pd)
 
 %% PLOTTING SQUARE LAW DETECTOR RAYLEIGH (expo PDF, H0)
 
-v2 = raylpdf(x,var); %15.19
+v2 = raylpdf(x,var); %Richards 15.19
 
 figure
 plot(x,v2)
@@ -63,14 +65,54 @@ ylabel("Pv")
 title("Exponential distribution (PDF) of the output voltage of the square law detector")
 
 % threshhold value for rayleigh
-T = std_dev*sqrt(-log(Pfa));
+%T = sqrt(2)*std_dev*sqrt(-log(Pfa)); %Richards 15.47
+T = Vt;
+hold on
+xline(T)
 
+%% Rayleigh CDF
+
+v2_cdf = raylcdf(x,var);
+
+figure
+plot(x,v2_cdf)
+xlabel("voltage at output of square law detector")
+ylabel("Pv")
+title("rayleigh distribution (cdf) of the output voltage of the square law detector")
 hold on
 xline(T)
 
 %% APPLYING SWERLING 1
 
+syms snr
 
+SNR = zeros(1, length(Pd));
+
+for i = 1:numel(Pd)
+    
+    pd = Pd(i);
+    
+    eqn = ( pd == exp(-T/(1+Nt*snr)) );
+    
+    %eqn = ( pd == ((1 + 1/(Nt*snr))^(Nt-1))*exp(-T/(1+Nt*snr)) );
+    
+    if i == 1
+        
+        SNR(1,i) = solve(eqn,snr)
+        
+    else
+        
+
+        SNR(1,i) = solve(eqn,snr)
+        
+    end 
+
+end
+    
+figure
+plot(10*log10(SNR),Pd)
+xlabel("SNR (dB)")
+ylabel("Pd")
 
 
 

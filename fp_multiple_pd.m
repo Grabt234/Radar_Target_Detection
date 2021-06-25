@@ -50,7 +50,9 @@ snr_db = 10.*log10(snr)
 %% ROC plot
 
 plot(snr_db,Pd)
-
+xlabel("SNR(dB)")
+ylabel("Pd")
+title("Plot showing")
 
 
 
