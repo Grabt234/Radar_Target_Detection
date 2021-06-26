@@ -1,16 +1,16 @@
 close all
 
-Pfa = 1e-6;
-Pd = 0.1:0.01:0.95
+Pfa = 1e-4;
+Pd = 0.1:0.005:0.9
 
-Nt = 1
+Nt = 100
 
 %% NOISE VOLTAGE DISTRIBUTION
 
 x = -7:.01:7;
 %standard deviation of noise
-std_dev = (1)^-0.5;
-var = ((std_dev)^2)/2
+std_dev = (1/1)^-0.5;
+var = (std_dev)^2
 pd = makedist('Normal','Sigma',std_dev);
 H0 =  pdf(pd,x);
 
@@ -65,8 +65,8 @@ ylabel("Pv")
 title("Exponential distribution (PDF) of the output voltage of the square law detector")
 
 % threshhold value for rayleigh
-%T = sqrt(2)*std_dev*sqrt(-log(Pfa)); %Richards 15.47
-T = Vt;
+T = sqrt(2)*std_dev*sqrt(-log(Pfa)); %Richards 15.47
+
 hold on
 xline(T)
 
@@ -92,25 +92,24 @@ for i = 1:numel(Pd)
     
     pd = Pd(i);
     
-    eqn = ( pd == exp(-T/(1+Nt*snr)) );
-    
-    %eqn = ( pd == ((1 + 1/(Nt*snr))^(Nt-1))*exp(-T/(1+Nt*snr)) );
+    %eqn = ( pd == (1 + 1/(Nt*snr))^(Nt-1)*exp(-T/(1+Nt*snr)) );
+    eqn = ( Nt*snr == -(T+log(pd))/log(pd) )
     
     if i == 1
         
-        SNR(1,i) = solve(eqn,snr)
+        SNR(1,i) = vpasolve(eqn,snr)
         
     else
         
-
-        SNR(1,i) = solve(eqn,snr)
+        
+        SNR(1,i) = vpasolve(eqn,snr)
         
     end 
 
 end
     
 figure
-plot(10*log10(SNR),Pd)
+plot(10*log(SNR),Pd)
 xlabel("SNR (dB)")
 ylabel("Pd")
 
