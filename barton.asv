@@ -22,5 +22,3 @@ int_gain = 10*log10(Nt);
 nc_loss = 0;
 
 %% LOSS DUE TO FLUCTUATIONS
-
-lf0 = min_snr - 

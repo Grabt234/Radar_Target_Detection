@@ -41,47 +41,62 @@ xlabel("Voltage")
 ylabel("Cumulative Probability")
 title("CDF OF NOISE VOLTAGE WITH PROBABILITY OF FALSE ALARM")
 
-%% SIGNAL DISTRIBUTION
-Pd = 0.1;
+%% DISTRIBUTION PARAMETERS
+
+%probability of detection
+Pd = 0.8;
+
 %lower bound to include 80% of H1 above threshold
-norm_area_right_pd = 1- Pd;
+Pd_not = 1- Pd;
 
 %converting area of norm to threshold value
+Vt_unshifted = norminv(Pd_not,0,std_dev);
 
-d_thresh = norminv(norm_area_right_pd,0,std_dev);
+%% PLOTTING H1 CDF
 
 %plotting cdf of H1
 figure
+
 plot(x,cdf('Normal',x,0,std_dev));
-xline(d_thresh)
+xline(Vt_unshifted)
 title("plot showing CDF H1 with pd")
 
 %plotting pdf of H1
 pd_pd = makedist('Normal','Sigma',std_dev, 'mu', 0);
 
+%% PLOTTING H1 PDF
+
 %ploting pdf of H1 with threshold
 figure
+subplot(1,2,1)
 plot(x,pdf(pd_pd,x))
-title("plot showing PDF H1 with pd")
+title({'UNSHIFTED SIGNAL AND NOISE PDF WITH' ; 'THRESHOLD VOLTAGE PLOTTED'})
+xlabel("Voltage")
+ylabel("Probability")
 hold on
-xline(d_thresh)
+xline(Vt_unshifted)
 
 %% PLOTTING BOTH
 H1 = pdf(pd_pd,x);
 
-m = Vt - d_thresh
-m2 = m^2
-snr = m2/(std_dev^2)
-snr_db = 10*log10(snr)
-
-figure
+subplot(1,2,2)
 plot(x, H0)
 hold on
-plot(x+Vt-d_thresh, H1)
+plot(x+Vt-Vt_unshifted, H1)
+title({'UNSHIFTED SIGNAL AND NOISE PDF WITH' ; 'THRESHOLD VOLTAGE PLOTTED'})
+xlabel("Voltage")
+ylabel("Probability")
 hold on
 xline(Vt)
 
 
+%% ADDITIONAL CALCULATIONS
+
+
+m = Vt - Vt_unshifted
+m2 = m^2
+snr = m2/(std_dev^2)
+snr_db = 10*log10(snr)
 
 
 
