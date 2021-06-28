@@ -1,7 +1,7 @@
 close all
 
 Pfa = 1e-4;
-Pd = 0.1:0.005:0.9
+Pd = 0.05:0.01:0.95
 
 Nt = 100
 
@@ -98,12 +98,12 @@ for i = 1:numel(Pd)
     
     if i == 1
         
-        SNR(1,i) = solve(eqn,snr)
+        SNR(1,i) = vpasolve(eqn,snr)
         
     else
         
         
-        SNR(1,i) = solve(eqn,snr)
+        SNR(1,i) = vpasolve(eqn,snr)
         
     end 
 
