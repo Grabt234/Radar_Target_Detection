@@ -94,15 +94,16 @@ for i = 1:numel(Pd)
     
     %eqn = ( pd == (1 + 1/(Nt*snr))^(Nt-1)*exp(-T/(1+Nt*snr)) );
     eqn = ( Nt*snr == -(T+log(pd))/log(pd) )
+    %eqn = ( pd == 1 - gammainc(T,Nt-1) + ((1 + 1/(Nt*snr))^(Nt-1))  )
     
     if i == 1
         
-        SNR(1,i) = vpasolve(eqn,snr)
+        SNR(1,i) = solve(eqn,snr)
         
     else
         
         
-        SNR(1,i) = vpasolve(eqn,snr)
+        SNR(1,i) = solve(eqn,snr)
         
     end 
 

@@ -1,49 +1,48 @@
 close all
 
-Pfa = 1e-3;
-Pd = 0.1;
 
-%% NOISE VOLTAGE DISTRIBUTION
 
+
+%% NOISE VOLTAGE DISTRIBUTION AND VT CALCULATION
+
+%probability of false alarm
+Pfa = 0.5e-1;
+
+%possible voltages
 x = -7:.01:7;
 %standard deviation of noise
-std_dev = (1)^-0.5;
+std_dev = 1/sqrt(1);
+%defining PDF of noise voltage
 pd = makedist('Normal','Sigma',std_dev);
 H0 =  pdf(pd,x);
 
-figure
+%determining voltage threshold
+Vt =  norminv(1- Pfa,0, std_dev);
+
+%plotting
+subplot(1,2,1)
 plot(x,H0)
-
-xlabel("Voltage")
-ylabel("Probability")
-title("Plot showing voltage PDF with threshold voltage plotted")
-
-%% THRESHOLD VOLTAGE
-
-%inverse of the cumulative normal distribution give threshold voltage
-%finding P(v|H0) > Vtrice
-Vt =  norminv(1- Pfa,0, std_dev)
 hold on
 xline(Vt)
-
+hold off
+xlabel("Voltage")
+ylabel("Probability")
+title("VOLTAGE PDF WITH THRESHOLD VOLTAGE PLOTTED")
 
 %% CUMULATIVE VOLTAGE DISTRIBUTION OF NOISE
 
-figure
+right_pfa = 1 - cdf('Normal',Vt,0,std_dev);
 
-norm_area_right_pfa = 1 - cdf('Normal',Vt,0,std_dev);
-a = norminv(norm_area_right_pfa,0,std_dev)
-
+subplot(1,2,2)
 plot(x,cdf('Normal',x,0,std_dev))
 hold on
-xline(a)
-
-xlabel("voltage")
-ylabel("cumulative probability")
-title("CDF of noise voltage")
+xline(right_pfa)
+xlabel("Voltage")
+ylabel("Cumulative Probability")
+title("CDF OF NOISE VOLTAGE WITH PROBABILITY OF FALSE ALARM")
 
 %% SIGNAL DISTRIBUTION
-
+Pd = 0.1;
 %lower bound to include 80% of H1 above threshold
 norm_area_right_pd = 1- Pd;
 
