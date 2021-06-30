@@ -1,7 +1,7 @@
 close all
 
-Pfa = 1e-4;
-Pd = 0.05:0.01:0.95
+Pfa = 0.05;
+Pd = 0.1:0.01:0.95
 
 Nt = 100
 
@@ -60,9 +60,9 @@ v2 = raylpdf(x,var); %Richards 15.19
 
 figure
 plot(x,v2)
-xlabel("voltage at output of square law detector")
+xlabel("Voltage")
 ylabel("Pv")
-title("Exponential distribution (PDF) of the output voltage of the square law detector")
+title({'RAYLEIGH DISTRIBUTION (PDF) OF THE OUTPUT';'VOLTAGE OF THE SQUARE LAW DETECTOR'})
 
 % threshhold value for rayleigh
 T = sqrt(2)*std_dev*sqrt(-log(Pfa)); %Richards 15.47
@@ -76,9 +76,9 @@ v2_cdf = raylcdf(x,var);
 
 figure
 plot(x,v2_cdf)
-xlabel("voltage at output of square law detector")
+xlabel("Voltage")
 ylabel("Pv")
-title("rayleigh distribution (cdf) of the output voltage of the square law detector")
+title("RAYLEIGH DISTRIBUTION (CDF) OF THE OUTPUT VOLTAGE OF THE SQUARE LAW DETECTOR")
 hold on
 xline(T)
 
@@ -110,7 +110,7 @@ for i = 1:numel(Pd)
 end
     
 figure
-plot(10*log(SNR),Pd)
+plot(10*log10(SNR),Pd)
 xlabel("SNR (dB)")
 ylabel("Pd")
 

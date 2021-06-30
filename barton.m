@@ -1,11 +1,10 @@
 %% BARTONS METHOD PARAMETERS
 
 %probability of false alarm
-pfa = 1e-4;
+pfa = 0.05;
 
 %probability of detection
-pd = 0.1:0.01:0.99;
-
+pd = 0.1:0.005:0.95;
 
 %coherently integrated pulses
 Nt = 100;
@@ -24,12 +23,14 @@ int_gain = 10*log10(Nt);
 
 %% LOSS DUE TO NON-COHERENT INTEGRATION
 
+%coherently integrated therefore = 0
 nc_loss = 0;
 
 %% LOSS DUE TO FLUCTUATIONS
-pfa2 = repmat(pfa,1,length(pd))
+pfa2 = repmat(pfa,1,length(pd));
 
-D1 = log(pfa2)/log(pd) + 1;
+%intentionally ln()
+D1 = log(pfa2)./log(pd) + 1;
 D0 = zeros(1,length(pd));
 
 for i = 1:numel(pd)
@@ -38,14 +39,18 @@ for i = 1:numel(pd)
 
 end
 
-lf1 = D1./D0;
+%converting to db scale
+lf1 = 10*log10(D1) - 10*log10(D0);
+lf = lf1*(1+0.035*log10(Nt));
+ 
+%% COMPUTING BARTONS AND PLOTTING
 
-lf = 10*log(lf1);
-lf = lf*(1+0.035*log10(Nt))
+%snr axis
+SNR_db = 10*log10(min_snr) - int_gain + lf1;
 
-temp = 10*log10(min_snr) -int_gain + lf;
-
-plot(10*log(temp), pd)
+%plotting onto already existing graphs
+hold on
+plot( SNR_db, pd)
 
 
 
