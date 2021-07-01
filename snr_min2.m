@@ -1,4 +1,4 @@
-function snr = snr_min(F,D)
+function snr = snr_min2(F,D)
     % ---------------------------------------------------------------------    
     % snr_min: calculates the minimum required snr to detect a single pulse
     %              given the probability of detection and false alarm rate
@@ -17,11 +17,11 @@ function snr = snr_min(F,D)
     %condition allows for snr that ^2 removes
     if (F <= D)
         
-        snr = 0.5*(raylinv(F,1) - raylinv(D,1))^2;
+        snr = 0.5*(raylinv(F) - raylinv(D))^2;
         
     else
         
-        snr = -0.5*(raylinv(F,1) - ralyinv(D,1))^2;
+        snr = -0.5*(raylinv(F) - raylinv(D))^2;
     
     end
     
