@@ -17,7 +17,7 @@ function snr = snr_min(F,D)
     %condition allows for snr that ^2 removes
     if (F <= D)
         
-        snr = 0.5*(raylinv(F,1) - raylinv(D,1))^2;
+        snr = 0.5*(norminv(F,1) - norminv(D,1))^2;
         
     else
         

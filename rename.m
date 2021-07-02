@@ -1,7 +1,7 @@
 close all
 
 %% SETUP PARAMETERS
-Pfa = 0.05;
+Pfa = 10^-4;
 Pd = 0.8:0.005:0.95
 Nt = 100
 
@@ -97,22 +97,15 @@ for i = 1:numel(Pd)
     %eqn = ( pd == exp(-T/(1+Nt*snr)));  % 3.22 THIS WORKS
     eqn = ( pd == exp(log(Pfa)/(1+Nt*snr)));  % Barton 2.46
     %eqn = ( pd == 1 - gammainc(T,Nt-1) + ((1 + 1/(Nt*snr))^(Nt-1))*gammainc(T/(1+(1/Nt*snr)), Nt-1)*exp(-T/(1+Nt*snr))  )
-    
-    if i == 1
-        
-        SNR(1,i) = vpasolve(eqn,snr);
-        
-    else
-        
-        
-        SNR(1,i) = vpasolve(eqn,snr);
-        
-    end 
+      
+    SNR(1,i) = vpasolve(eqn,snr);
+
 
 end
     
 figure
 plot(10*log10(SNR),Pd)
+title("")
 xlabel("SNR (dB)")
 ylabel("Pd")
 
